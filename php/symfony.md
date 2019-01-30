@@ -1,6 +1,6 @@
 
 
-#Bundles
+# Bundles
 * Bundles are a plugin system in Symfony.
 * Services are tools in symfony, which come in bundles. 
 * Everything in symfony is done by a service.
