@@ -15,13 +15,20 @@
 
 ## Event Loop
 - control structure of what the one thread should be doing in node
+- almost all functions around networking, use the OS's async features
+  - these tasks are done in the 'pendingOSTasks' array in the below event loop
+- Threadpool has 4 threads in it
+- networking, http module does not work with the thread pool
+- fs module, and crypto module does work with thread pool
+- file system calls; thread is switched to another while waiting for os to read hard drive
+    in this time, takes another task, normally it is fast but if has to switch will take longer
 
 Diagram:
 ```
 
 const pendingTimers = [];
 const pendingOSTasks = [];
-const pendingOperations = [];
+const pendingOperations = []; // these are operations that use libuv, like fs, or crypto functions, these use multithreading
 
 function shouldContinue() {
   // check 1: any pending setTimeout, setInterval ...
@@ -33,7 +40,8 @@ function shouldContinue() {
 // entire body executes in one 'tick'
 while(shouldContinue()) {
   // 1. node looks at pendingTimers and sees if any functions are ready to be called
-  // 2. node looks at pendingOSTasks and pendingOperations adn calls relevant callbacks
+  // 2. node looks at pendingOSTasks and pendingOperations and calls relevant callbacks
+        - run callbacks for any os tasks, or threadpool tasks that are done, (99% of our code)
   // 3. pause execution, continue when...
       // - a new pendingOSTask is done
       // - a new pendingOperation is done
@@ -44,4 +52,21 @@ while(shouldContinue()) {
 
 ```
 
+## Enahncing Performance
+- use Node 'Cluster' mode
+- experimental: Use Worker threads
+- use ab for benchmarking (apache benchmark on macos and linux)
 
+## Clustering
+- e.g.: When a request does work and blocks for 5 seconds, each simultaneus request will also be blocked
+- cluster manager, is one overarching parent process, responsible for health of single node processes 
+- Cluster manager is not responsible for requests, or database
+- clustering start up multiple instances of you server that more evenly address all incoming requests for more predictable response times
+- match number of clusters to physical cores on your machine (macbook -> two cores)
+- pm2 cli is best cluster management open source software
+- `pm2 start index.js -i 0` -i 0 means starts up number of instances equal to logical CPU cores on your computer
+- 2 cores x 2 threads = 4 logical cores
+- `pm2 list` - `pm2 show` - `pm2 monit`
+
+## Worker threads
+- `npm i --save webworker-threads`
