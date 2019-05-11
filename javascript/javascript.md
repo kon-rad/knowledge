@@ -37,14 +37,30 @@ console.log(foo[2]());
 - it's defined by the calling context
 ```
 const foo = {
-    checkThis: () => {
+    checkThis: function() {
         console.log(this);
     }
 };
-asim.checkThis(); // will return same object as foo
+foo.checkThis(); // will return same object as foo
 
 const func = foo.checkThis;
-func(); // will return global object (unless use strict is set)
+func(); // will return global object (unless use strict is set, then it will be undefined)
+```
+
+#### call, apply and bind functions
+- call and apply stabalizes the this value for a function
+- bind sets the value of this for a function
+```
+function a(b, c, d) {
+    console.log(this, b, c, d);
+}
+a.call(1, 2, 3, 4); // will return 1 2 3 4
+a.apply(1, [2, 3, 4]); // will return 1 2 3 4
+
+const a = function() {
+    console.log(this);
+}.bind(1);
+a(); // will return 1
 ```
 
 
