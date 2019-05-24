@@ -48,8 +48,8 @@ func(); // will return global object (unless use strict is set, then it will be 
 ```
 
 #### call, apply and bind functions
-- call and apply stabalizes the this value for a function
-- bind sets the value of this for a function
+- `call` and `apply` stabalizes the `this` value for a function
+- `bind` sets the value of `this` for a function
 ```
 function a(b, c, d) {
     console.log(this, b, c, d);
@@ -62,5 +62,27 @@ const a = function() {
 }.bind(1);
 a(); // will return 1
 ```
+
+### What is the prototype chain?
+- js will look on curent object for a property
+    - if not found it will look down the prototype chain
+- you can assign an object as a `__proto__` of another object (ES6)
+- also can use Object.create(ExistingObj)
+- you can check with isPrototypeOf method
+- classical: like architectual diagram and actual house
+- prototypal: no architectual diagrams, only houses built based on actual houses
+- can simulate 'private' properties by using closures (return first_name + ' ' + last_name;
+        this returns value passed in constructor);
+
+
+### Event capturing and Event bubbling
+- when you click on a button:
+        1. there is a event capturing phase which goes from the window (root) element to the button
+        2. event bubbling phase, goes from button to the window element
+- 3rd parameter in addEventListener() determines which phase: true = capturing, false = bubbling, default = false
+
+### what is the difference between stopPropagation() and preventDefault() ? 
+- stopPropagation prevents event from capturing down and bubbling up
+- preventDefault allows event to continue, but it doesnt perform it's usual operations (e.g. checkbox won't get checked)
 
 
