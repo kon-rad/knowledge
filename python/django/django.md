@@ -1,9 +1,9 @@
 
 
-#Django
+# Django
 
 ## General
-- kill runnin server `$ sudo lsof -t -i tcp:8000 | xargs kill -9`
+- kill running server `$ sudo lsof -t -i tcp:8000 | xargs kill -9`
 - create environment `$ python3 -m venv ./env`
 - start env `$ source env/bin/activate`
 - Set env variable:

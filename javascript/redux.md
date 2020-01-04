@@ -24,6 +24,18 @@
 - e.g. setting up store, setsup immer and redux dev tools
 - RTK will simplify your logic and ensure that youra app is set up with good defaults
 
+### Use Immer
+
+### Structure Files as Feature Folders or 'Ducks'
+- all files for a feature in a same folder
+- or ducks pattern, all redux logic for a feature in a single file
+- rather then splitting by type of redux code (reducers, actions, etc.)
+
+### Put as Much Logic as Possible in Reducers
+- rather than in code that prepares and dispatches action
+- ensures more of app is easily testable, and can use time-travel debugging
+- except in cases like: generating unique id
+
 
 
 
