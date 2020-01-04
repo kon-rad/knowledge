@@ -36,6 +36,20 @@
 - ensures more of app is easily testable, and can use time-travel debugging
 - except in cases like: generating unique id
 
+### Reducers Should Own the State Shape
+- slice reducers should control what values are returned as part of the calculated state
+- minimize the use of 'blind spreads/returns' like `return action.payload` or `return {...state, ...action.payload}`
+    - They rely on the code taht dispatched the action to correctly format the contents, can lead to bugs if not correct
+
+### Name Sate Slices Based On the Stored Data
+- avoid use of word 'reducer'
+
+### Treat Reducers as State Machines
+- don't unconditionally update state based on action
+- determine new state by current state _and_ action
+
+
+## Recommended Rules
 
 
 
